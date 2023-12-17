@@ -5,7 +5,7 @@ WORKDIR /home/app
 
 COPY package*.json ./
 
-RUN npm install rimraf
+RUN npm install
 
 COPY . .
 
