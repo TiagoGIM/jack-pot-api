@@ -5,16 +5,27 @@ import { TicketDto } from './dto/get-ticket.dto';
 
 @Injectable()
 export class TicketService {
-  private readonly tickets :TicketDto[] = [
-    { id: '1', numbers: [1, 2, 3, 4, 5, 6,7, 8], length: 8, status: 'active' },
-    { id: '2', numbers: [ 1, 2, 3, 4, 5, 6,7, 8,9 ], length: 9, status: 'active' },
+  private readonly tickets: TicketDto[] = [
+    { id: '1', numbers: [1, 2, 3, 4, 5, 6, 7, 8], length: 8, status: 'active' },
+    {
+      id: '2',
+      numbers: [],
+      length: 9,
+      status: 'active',
+    },
+    {
+      id: '3',
+      numbers: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+      length: 9,
+      status: 'ended',
+    },
     // Add more ticket data as needed
   ];
   create(createTicketDto: CreateTicketDto) {
     return 'This action adds a new ticket';
   }
 
-  findAll() :TicketDto[] {
+  findAll(): TicketDto[] {
     return this.tickets;
   }
 
