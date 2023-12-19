@@ -8,18 +8,6 @@ export const roundsOfHashing = 10;
 export class UsersService {
 
   constructor(private prisma: PrismaService) {}
-  // private readonly users = [
-  //   {
-  //     userId: 1,
-  //     email: 'john@doe.com',
-  //     password: 'changeme',
-  //   },
-  //   {
-  //     userId: 2,
-  //     email: 'maria',
-  //     password: 'guess',
-  //   },
-  // ];
 
   async create(createUserDto: CreateUserDto) {
     const hashedPassword = await bcrypt.hash(
@@ -38,12 +26,11 @@ export class UsersService {
   }
 
   async findOne(email: string) {
-    return this.prisma.user.findFirst({
+    return this.prisma.user.findUnique({
       where:{
         login: email
       }
     })
-    // return this.users.find((user) => user.email === email);
   }
 
   async findAll() {
