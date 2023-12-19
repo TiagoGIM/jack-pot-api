@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateTicketDto } from './dto/create-ticket.dto';
 import { UpdateTicketDto } from './dto/update-ticket.dto';
-import { TicketDto } from './dto/get-ticket.dto';
+import { Bet, TicketDto } from './dto/get-ticket.dto';
 
 @Injectable()
 export class TicketService {
@@ -26,6 +26,9 @@ export class TicketService {
   }
 
   findAll(): TicketDto[] {
+    
+    // 
+    // ticketRepository.findAll()
     return this.tickets;
   }
 
@@ -39,5 +42,9 @@ export class TicketService {
 
   remove(id: number) {
     return `This action removes a #${id} ticket`;
+  }
+
+  updateBet( bet : Bet) : Bet {
+    return bet
   }
 }
