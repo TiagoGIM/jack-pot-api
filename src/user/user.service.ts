@@ -32,6 +32,7 @@ export class UsersService {
       data: {
         login: createUserDto.email,
         password: createUserDto.password,
+        name: createUserDto.name
       }
     });
   }
