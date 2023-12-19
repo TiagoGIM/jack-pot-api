@@ -10,7 +10,7 @@ export class UserController {
       return this.userService.findAll();
     }
 
-    @Post()
+    @Post('/create')
     create(@Body() createUserDto: CreateUserDto) {
         return this.userService.create(createUserDto);
       }
