@@ -6,9 +6,7 @@ WORKDIR /home/app
 COPY package.json /home/app/package.json
 COPY package-lock.json /home/app/package-lock.json
 
-RUN rm -rf node_modules
 RUN npm install 
-RUN npm install --save @nestjs/jwt
 
 COPY . .
 
