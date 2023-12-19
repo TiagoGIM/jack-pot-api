@@ -23,6 +23,7 @@ export class TicketController {
     return this.ticketService.create(createTicketDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get()
   findAll() {
     return this.ticketService.findAll();

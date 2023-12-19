@@ -1,0 +1,10 @@
+GET http://localhost:3000/ticket
+Authorization: Bearer
+
+###
+POST http://localhost:3001/auth/login
+content-type: application/json
+{
+    "password":"test12345",
+    "email":"herique.sa@gmail.com"
+}

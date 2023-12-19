@@ -2,9 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { CreateTicketDto } from './dto/create-ticket.dto';
 import { UpdateTicketDto } from './dto/update-ticket.dto';
 import { Bet, TicketDto } from './dto/get-ticket.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class TicketService {
+  constructor(private prisma: PrismaService) { }
   private readonly tickets: TicketDto[] = [
     { id: '1', numbers: [1, 2, 3, 4, 5, 6, 7, 8], length: 8, status: 'active' },
     {
@@ -22,7 +24,11 @@ export class TicketService {
     // Add more ticket data as needed
   ];
   create(createTicketDto: CreateTicketDto) {
-    return 'This action adds a new ticket';
+    return  this.prisma.ticket.create({
+      data : {
+        ...createTicketDto
+      }
+    });
   }
 
   findAll(): TicketDto[] {

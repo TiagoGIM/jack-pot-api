@@ -26,7 +26,7 @@ export class UsersService {
   }
 
   async findOne(email: string) {
-    return this.prisma.user.findUnique({
+    return this.prisma.user.findFirst({
       where:{
         login: email
       }

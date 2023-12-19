@@ -12,10 +12,12 @@ import { UsersService } from './user/user.service';
 import { UserController } from './user/user.controller';
 import { UsersModule } from './user/user.module';
 import { PrismaModule } from './prisma/prisma.module';
+import { BetService } from './bet/bet.service';
+import { BetController } from './bet/bet.controller';
 
 @Module({
   imports: [AuthModule, UsersModule,TicketModule, PrismaModule],
-  controllers: [AppController, AuthController, UserController,TicketController],
-  providers: [AppService, AuthService, UsersService,TicketService],
+  controllers: [AppController, AuthController, UserController,TicketController, BetController],
+  providers: [AppService, AuthService, UsersService,TicketService, BetService],
 })
 export class AppModule {}
