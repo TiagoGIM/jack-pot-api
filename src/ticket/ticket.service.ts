@@ -7,22 +7,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 @Injectable()
 export class TicketService {
   constructor(private prisma: PrismaService) { }
-  private readonly tickets: TicketDto[] = [
-    { id: '1', numbers: [1, 2, 3, 4, 5, 6, 7, 8], length: 8, status: 'active' },
-    {
-      id: '2',
-      numbers: [],
-      length: 9,
-      status: 'active',
-    },
-    {
-      id: '3',
-      numbers: [1, 2, 3, 4, 5, 6, 7, 8, 9],
-      length: 9,
-      status: 'ended',
-    },
-    // Add more ticket data as needed
-  ];
+
   create(createTicketDto: CreateTicketDto) {
     return  this.prisma.ticket.create({
       data : {
@@ -47,7 +32,4 @@ export class TicketService {
     return `This action removes a #${id} ticket`;
   }
 
-  updateBet( bet : Bet) : Bet {
-    return bet
-  }
 }
