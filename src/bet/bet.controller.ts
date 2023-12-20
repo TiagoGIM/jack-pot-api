@@ -22,4 +22,9 @@ export class BetController {
         const userId = req.user.id;
         return this.betService.editBet(userId, bet)
     }
+
+    @Get('/odd')
+    async oods(){
+        return this.betService.mostPickedByUsers();
+    }
 }

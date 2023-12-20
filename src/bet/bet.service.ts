@@ -63,4 +63,35 @@ export class BetService {
       }
     })
   }
+
+  async mostPickedByUsers() {
+    const allBets = await this.prisma.ticket.findMany({
+      select: {
+        pitacos: true,
+      },
+    });
+
+    const numbersMap: Map<number, number> = new Map();
+
+
+    allBets.forEach((bet) => {
+      if (bet.pitacos && bet.pitacos.length > 0) {
+
+        bet.pitacos.forEach((pitaco) => {
+          pitaco.numbers.forEach((number) => {
+
+            numbersMap.set(number, (numbersMap.get(number) || 0) + 1);
+          });
+        });
+      }
+    });
+
+
+    const mostPickeds: { number: number; quantity: number }[] = [];
+    numbersMap.forEach((quantity, number) => {
+      mostPickeds.push({ number, quantity });
+    });
+
+    return mostPickeds;
+  }
 }
