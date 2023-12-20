@@ -13,7 +13,7 @@ export class AuthService {
   async signIn(email: string, password: any) {
     const user = await this.usersService.findOne(email);
 
-    if(!user) throw new UnauthorizedException('user dont found');
+    if(!user) throw new UnauthorizedException('User not found');
     
     const isPasswordValid = await bcrypt.compare(password, user?.password);
    
