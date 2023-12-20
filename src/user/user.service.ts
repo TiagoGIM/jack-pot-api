@@ -25,10 +25,10 @@ export class UsersService {
     });
   }
 
-  async findOne(email: string) {
-    return this.prisma.user.findFirst({
+  async findOne(id: string) {
+    return this.prisma.user.findUnique({
       where:{
-        login: email
+        id
       }
     })
   }
