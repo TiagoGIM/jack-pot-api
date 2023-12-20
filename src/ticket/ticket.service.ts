@@ -31,11 +31,8 @@ export class TicketService {
     });
   }
 
-  findAll(): TicketDto[] {
-    
-    // 
-    // ticketRepository.findAll()
-    return this.tickets;
+  findAll() {
+    return this.prisma.ticket.findMany();
   }
 
   findOne(id: number) {
