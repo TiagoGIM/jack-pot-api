@@ -10,14 +10,18 @@ export class BetService {
 
   async userBets(userId: string) {
 
-    const activeTickets = await this.prisma.ticket.findMany({ where: { status: 'active' } });
+    const activeTickets = await this.prisma.ticket.findMany({ where: { status: 'active' } ,
+   });
 
     const bets = await this.prisma.bet.findMany({
       where:
       {
         userId,
         ticketId: { in: activeTickets.map(ticket => ticket.id) }
-      }
+      },
+      orderBy: {
+        updatedAt: 'desc', // Isso ordenará pela data de atualização em ordem decrescente
+      },
     });
 
 
