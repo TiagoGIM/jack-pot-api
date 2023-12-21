@@ -20,7 +20,7 @@ export class BetService {
         ticketId: { in: activeTickets.map(ticket => ticket.id) }
       },
       orderBy: {
-        updatedAt: 'desc', // Isso ordenará pela data de atualização em ordem decrescente
+        updatedAt: 'desc',
       },
     });
 
