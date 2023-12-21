@@ -1,4 +1,4 @@
-FROM node:16.3-alpine As dev
+FROM node:19-slim As dev
 
 RUN mkdir -p /home/app
 WORKDIR /home/app
@@ -6,7 +6,9 @@ WORKDIR /home/app
 COPY package.json /home/app/package.json
 COPY package-lock.json /home/app/package-lock.json
 
-RUN npm install 
+
+
+RUN npm install
 
 COPY . .
 
