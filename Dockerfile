@@ -1,15 +1,15 @@
-FROM node:19-slim As dev
+FROM node:20-alpine
 
-RUN mkdir -p /home/app
-WORKDIR /home/app
+WORKDIR /usr/src/app
 
-COPY package.json /home/app/package.json
-COPY package-lock.json /home/app/package-lock.json
+COPY package*.json  ./
 
-
-
-RUN npm install
+RUN npm ci
 
 COPY . .
 
 RUN npm run build
+
+EXPOSE 3000/tcp
+
+CMD [ "node", "dist/main.js" ]
