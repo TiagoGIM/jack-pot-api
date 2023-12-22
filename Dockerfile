@@ -1,15 +1,25 @@
-FROM node:20-alpine
+FROM node:19-slim As dev
 
-WORKDIR /usr/src/app
+RUN mkdir -p /home/app
+WORKDIR /home/app
 
-COPY package*.json  ./
+COPY package.json /home/app/package.json
+COPY package-lock.json /home/app/package-lock.json
 
-RUN npm ci
 
+
+
+RUN npm install
+RUN npm uninstall bcrypt
+
+# install the bcrypt modules for the machine
+RUN npm install bcrypt
 COPY . .
 
+RUN npx prisma generate
 RUN npm run build
 
-EXPOSE 3000/tcp
 
-CMD [ "node", "dist/main.js" ]
+# EXPOSE 3000/tcp
+
+# CMD [ "node", "dist/main.js" ]
