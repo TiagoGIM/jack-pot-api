@@ -7,6 +7,8 @@ import { jwtConstants } from './constants';
 import { JwtStrategy } from './auth.jwt.strategy';
 import { PassportModule } from '@nestjs/passport';
 import * as dotenv from 'dotenv';
+import { APP_GUARD } from '@nestjs/core';
+import { RoleGuard } from './role.guard';
 dotenv.config();
 
 export const jwtSecret = process.env.JWT_SECRET || jwtConstants.secret;
@@ -21,7 +23,12 @@ export const jwtSecret = process.env.JWT_SECRET || jwtConstants.secret;
       signOptions: { expiresIn: '1h' },
     }),
   ],
-  providers: [AuthService, JwtStrategy],
+  providers: [AuthService, JwtStrategy,  
+  //   {
+  //   provide: APP_GUARD,
+  //   useClass: RoleGuard,
+  // },
+],
   controllers: [AuthController],
   exports: [AuthService],
 })

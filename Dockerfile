@@ -17,6 +17,7 @@ RUN npm install bcrypt
 COPY . .
 
 RUN npx prisma generate
+RUN npx prisma db pull
 RUN npm run build
 
 

@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Patch, Req, UseGuards } from '@nestjs/common';
 import { BetService } from './bet.service';
-import { betCreateDto, betResponseDto } from './bet.dto';
+import { betCreateDto } from './bet.dto';
 import { JwtAuthGuard } from 'src/auth/auth.guard';
 
 @Controller('bet')
@@ -24,6 +24,7 @@ export class BetController {
     }
 
     @Get('/odd')
+    @UseGuards(JwtAuthGuard)
     async oods(){
         return this.betService.mostPickedByUsers();
     }
