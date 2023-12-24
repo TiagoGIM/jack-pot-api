@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { UsersService } from './user.service';
 import { CreateUserDto, UpdateUserRoleDto, UpdateUserStatus, User } from './user.dto';
 import { Roles } from 'src/auth/role.decorator';
@@ -11,14 +11,21 @@ import { Role } from 'src/enum/auth.enum';
 export class UserController {
     constructor(private readonly userService: UsersService) {}
     @Get()
+    @UseGuards(JwtAuthGuard)
     findAll()  {
       return this.userService.findAll();
     }
 
     @Get('/ping')
     @UseGuards(JwtAuthGuard)
-      pending() {
-        return {'message' :'ok'}
+      async pending(@Req() req) {
+        const userId = req.user.id;
+        const user = await this.userService.findOne(userId)
+        return  {
+          signature :user.signature, 
+          userName : user.name,
+          email: user.login
+        }
     }
 
     @Post('/create')
