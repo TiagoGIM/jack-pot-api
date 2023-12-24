@@ -1,4 +1,5 @@
 import { PickType } from "@nestjs/mapped-types";
+import { Role, Signature } from "src/enum/auth.enum";
 import { Bet } from "src/ticket/dto/get-ticket.dto";
 
 export interface User {
@@ -6,7 +7,8 @@ export interface User {
     name? :string;
     email : string;
     bets? : Bet[];
-    password? :string;
+    signature?: Signature
+
 }
 
 export class CreateUserDto {
@@ -15,14 +17,13 @@ export class CreateUserDto {
     email : string;
     bets? : Bet[];
     password? :string;
-    role?: Role.User
+    role?: Role;
+    signature?: Signature;
   }
+
+export class UpdateUserStatus extends  PickType(CreateUserDto, [ 'signature', 'email']){
+}
 
 export class UpdateUserRoleDto  extends PickType(CreateUserDto, [ 'role', 'email']){
 
-}
-
-export enum Role{
-    Admin = 'admin',
-    User = 'user'
 }
