@@ -53,9 +53,11 @@ export class UsersService {
     })
   }
   async findAll()  {
-    const users = await this.prisma.user.findMany({
-      distinct: ['roles']
-    });
+    const users = await this.prisma.user.findMany(
+     
+    );
+
+    // console.log(users)
 
     return users.map(user => {
       return {

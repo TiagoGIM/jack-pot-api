@@ -12,8 +12,8 @@ export class UserController {
     constructor(private readonly userService: UsersService) {}
     @Get()
     @UseGuards(JwtAuthGuard)
-    findAll()  {
-      return this.userService.findAll();
+    async findAll()  {
+      return await this.userService.findAll();
     }
 
     @Get('/ping')
