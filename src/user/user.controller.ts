@@ -22,9 +22,10 @@ export class UserController {
         const userId = req.user.id;
         const user = await this.userService.findOne(userId)
         return  {
-          signature :user.signature, 
+          signatureStatus  :user.signature, 
           userName : user.name,
-          email: user.login
+          email: user.login,
+          roles:user.roles
         }
     }
 

@@ -62,7 +62,8 @@ export class UsersService {
     return users.map(user => {
       return {
         email: user.login, 
-        signature: user.signature,
+        signatureStatus: user.signature,
+        name: user.name
       }
     })
   }
