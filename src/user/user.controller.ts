@@ -48,6 +48,7 @@ export class UserController {
     @UseGuards(JwtAuthGuard, RoleGuard)
     @HttpCode(HttpStatus.OK)
     updateSignature(@Body() updateSignature : UpdateUserStatus){
+      console.log(updateSignature)
       return this.userService.updateStatusUser(updateSignature)
     }
     

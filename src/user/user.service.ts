@@ -74,14 +74,20 @@ export class UsersService {
   }
 
   async updateStatusUser(updateStatus: UpdateUserStatus) {
-    const user = this.findByphoneNumber(updateStatus.phoneNumber)
+    console.log(updateStatus.phoneNumber)
+    const user = await this.findByphoneNumber(updateStatus.phoneNumber)
 
     if(!user) throw new NotFoundException('Usuário Não encontrado')
 
-    return this.prisma.user.update({
-      where: { login: updateStatus.phoneNumber },
+    const updateduser = await this.prisma.user.update({
+      where: { login: updateStatus?.phoneNumber },
       data: { signature: Signature.APROVED }
     })
+    return {
+      signatureStatus : user.signature,
+      name : user.name,
+      phoneNumber  : user.login
+    }
   }
 
   private handlePrismaError(error: any) {
