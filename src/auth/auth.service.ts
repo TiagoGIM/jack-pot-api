@@ -10,8 +10,8 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async signIn(email: string, password: any) {
-    const user = await this.usersService.findByemail(email);
+  async signIn(phoneNumber: string, password: any) {
+    const user = await this.usersService.findByphoneNumber(phoneNumber);
 
     if(!user) throw new UnauthorizedException('User not found');
     
@@ -21,11 +21,11 @@ export class AuthService {
       throw new UnauthorizedException();
     }
 
-    const payload = { userId: user.id, email: user.login };
+    const payload = { userId: user.id, phoneNumber: user.login };
 
     return {
       accessToken: await this.jwtService.signAsync(payload),
-      login:email,
+      login:phoneNumber,
       signatureStatus: user.signature,
       userName: user.name,
       role: user.roles

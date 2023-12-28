@@ -17,13 +17,13 @@ export class UsersService {
       roundsOfHashing,
       );
     createUserDto.password = hashedPassword;
-
+      console.log(createUserDto)
 
     try {
       
       const userCreated = await this.prisma.user.create({
         data: {
-          login: createUserDto.email,
+          login: createUserDto.phoneNumber,
           password: createUserDto.password,
           name: createUserDto.name
         }
@@ -45,10 +45,10 @@ export class UsersService {
     })
   }
   
-  findByemail(email: string) {
+  findByphoneNumber(phoneNumber: string) {
     return this.prisma.user.findFirst({
       where: {
-        login: email
+        login: phoneNumber
       }
     })
   }
@@ -61,7 +61,7 @@ export class UsersService {
 
     return users.map(user => {
       return {
-        email: user.login, 
+        phoneNumber: user.login, 
         signatureStatus: user.signature,
         name: user.name
       }
@@ -70,18 +70,18 @@ export class UsersService {
   
   async addRoleToUser(updateRole: UpdateUserRoleDto) {
     return this.prisma.user.update({
-      where: { login: updateRole.email },
+      where: { login: updateRole.phoneNumber },
       data: { roles: { push: updateRole.role } },
     });
   }
 
   async updateStatusUser(updateStatus: UpdateUserStatus) {
-    const user = this.findByemail(updateStatus.email)
+    const user = this.findByphoneNumber(updateStatus.phoneNumber)
 
-    if(!user) throw new NotFoundException('Email not found')
+    if(!user) throw new NotFoundException('phoneNumber not found')
 
     return this.prisma.user.update({
-      where: { login: updateStatus.email },
+      where: { login: updateStatus.phoneNumber },
       data: { signature: Signature.APROVED }
     })
   }

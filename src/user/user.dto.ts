@@ -4,8 +4,8 @@ import { Bet } from "src/ticket/dto/get-ticket.dto";
 
 export interface User {
     userId: any;
-    name? :string;
-    email : string;
+    name : string;
+    phoneNumber? :string;
     bets? : Bet[];
     signature?: Signature
 
@@ -14,16 +14,16 @@ export interface User {
 export class CreateUserDto {
     id: any;
     name? :string;
-    email : string;
+    phoneNumber : string;
     bets? : Bet[];
     password? :string;
     role?: Role;
     signature?: Signature;
   }
 
-export class UpdateUserStatus extends  PickType(CreateUserDto, [ 'signature', 'email']){
+export class UpdateUserStatus extends  PickType(CreateUserDto, [ 'signature', 'phoneNumber']){
 }
 
-export class UpdateUserRoleDto  extends PickType(CreateUserDto, [ 'role', 'email']){
+export class UpdateUserRoleDto  extends PickType(CreateUserDto, [ 'role', 'phoneNumber']){
 
 }
