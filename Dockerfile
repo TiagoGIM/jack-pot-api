@@ -21,6 +21,6 @@ RUN npx prisma generate
 RUN npm run build
 
 
-EXPOSE 3000/tcp
+# EXPOSE 3000/tcp
 
-CMD [ "node", "dist/main.js" ]
+# CMD [ "node", "dist/main.js" ]

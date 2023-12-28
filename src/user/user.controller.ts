@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Req, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Patch, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { UsersService } from './user.service';
 import { CreateUserDto, UpdateUserRoleDto, UpdateUserStatus, User } from './user.dto';
 import { Roles } from 'src/auth/role.decorator';
@@ -30,13 +30,15 @@ export class UserController {
     }
 
     @Post('/create')
+    @HttpCode(HttpStatus.CREATED)
     create(@Body() createUserDto: CreateUserDto) {
         return this.userService.create(createUserDto);
       }
 
-    @Post('/update-role')
+    @Patch('/update-role')
     @Roles(Role.ADMIN)
     @UseGuards(JwtAuthGuard, RoleGuard)
+    @HttpCode(HttpStatus.OK)
     updateRole(@Body() updateRole : UpdateUserRoleDto){
       return this.userService.addRoleToUser(updateRole)
     }
@@ -44,6 +46,7 @@ export class UserController {
     @Post('/update-signature')
     @Roles(Role.ADMIN)
     @UseGuards(JwtAuthGuard, RoleGuard)
+    @HttpCode(HttpStatus.OK)
     updateSignature(@Body() updateSignature : UpdateUserStatus){
       return this.userService.updateStatusUser(updateSignature)
     }

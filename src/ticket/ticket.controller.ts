@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  HttpCode,
 } from '@nestjs/common';
 import { TicketService } from './ticket.service';
 import { CreateTicketDto } from './dto/create-ticket.dto';
@@ -23,6 +24,7 @@ export class TicketController {
   @Roles(Role.ADMIN)
   @UseGuards(JwtAuthGuard, RoleGuard)
   @Post()
+  @HttpCode(201)
   create(@Body() createTicketDto: CreateTicketDto) {
     return this.ticketService.create(createTicketDto);
   }
@@ -46,6 +48,7 @@ export class TicketController {
 
   @UseGuards(JwtAuthGuard)
   @Delete(':id')
+  @HttpCode(204)
   remove(@Param('id') id: string) {
     return this.ticketService.remove(+id);
   }

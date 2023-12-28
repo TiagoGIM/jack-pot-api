@@ -1,8 +1,9 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto, UpdateUserRoleDto, UpdateUserStatus } from './user.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import * as bcrypt from 'bcrypt';
 import { Signature } from 'src/enum/auth.enum';
+import { ConflictException } from '@nestjs/common';
 
 
 export const roundsOfHashing = 10;
@@ -20,22 +21,21 @@ export class UsersService {
       console.log(createUserDto)
 
     try {
-      
-      const userCreated = await this.prisma.user.create({
+      await this.prisma.user.create({
         data: {
           login: createUserDto.phoneNumber,
           password: createUserDto.password,
           name: createUserDto.name
         }
       });
+
+      return { message: 'created' };
   
     } catch (error) {
-      console.log(error)
-    }
-
-    
-    return {message : 'created'}
+      
+      this.handlePrismaError(error);
   }
+}
   
   async findOne(id: string) {
     return this.prisma.user.findFirst({
@@ -56,8 +56,6 @@ export class UsersService {
     const users = await this.prisma.user.findMany({
       distinct: ['roles']
     });
-    // console.log(users)
-
 
     return users.map(user => {
       return {
@@ -78,11 +76,24 @@ export class UsersService {
   async updateStatusUser(updateStatus: UpdateUserStatus) {
     const user = this.findByphoneNumber(updateStatus.phoneNumber)
 
-    if(!user) throw new NotFoundException('phoneNumber not found')
+    if(!user) throw new NotFoundException('Usuário Não encontrado')
 
     return this.prisma.user.update({
       where: { login: updateStatus.phoneNumber },
       data: { signature: Signature.APROVED }
     })
   }
+
+  private handlePrismaError(error: any) {
+    
+    if (error.code === 'P2002' && error.meta?.target?.includes('login')) {
+      throw new ConflictException('O número de telefone já está em uso.');
+    }
+    if(error.message.includes('Argument `login` is missing')){
+      throw new BadRequestException('Argument `login` is missing')
+    }
+
+    throw new Error('Erro ao interagir com o banco de dados.');
+  }
+  
 }
