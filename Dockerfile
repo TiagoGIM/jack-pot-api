@@ -17,10 +17,10 @@ RUN npm install bcrypt
 COPY . .
 
 RUN npx prisma generate
-RUN npx prisma migrate deploy
+# RUN npx prisma migrate deploy
 RUN npm run build
 
 
-# EXPOSE 3000/tcp
+EXPOSE 3000/tcp
 
-# CMD [ "node", "dist/main.js" ]
+CMD [ "node", "dist/main.js" ]
