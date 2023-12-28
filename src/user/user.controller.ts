@@ -18,7 +18,7 @@ export class UserController {
 
     @Get('/ping')
     @UseGuards(JwtAuthGuard)
-      async pending(@Req() req) {
+    async pending(@Req() req) {
         const userId = req.user.id;
         const user = await this.userService.findOne(userId)
         return  {
@@ -31,25 +31,25 @@ export class UserController {
 
     @Post('/create')
     @HttpCode(HttpStatus.CREATED)
-    create(@Body() createUserDto: CreateUserDto) {
-        return this.userService.create(createUserDto);
+    async create(@Body() createUserDto: CreateUserDto) {
+        return await this.userService.create(createUserDto);
       }
 
     @Patch('/update-role')
     @Roles(Role.ADMIN)
     @UseGuards(JwtAuthGuard, RoleGuard)
     @HttpCode(HttpStatus.OK)
-    updateRole(@Body() updateRole : UpdateUserRoleDto){
-      return this.userService.addRoleToUser(updateRole)
+    async updateRole(@Body() updateRole : UpdateUserRoleDto){
+      return  await this.userService.addRoleToUser(updateRole)
     }
 
     @Post('/update-signature')
     @Roles(Role.ADMIN)
     @UseGuards(JwtAuthGuard, RoleGuard)
     @HttpCode(HttpStatus.OK)
-    updateSignature(@Body() updateSignature : UpdateUserStatus){
+    async updateSignature(@Body() updateSignature : UpdateUserStatus){
       console.log(updateSignature)
-      return this.userService.updateStatusUser(updateSignature)
+      return await this.userService.updateStatusUser(updateSignature)
     }
     
 }

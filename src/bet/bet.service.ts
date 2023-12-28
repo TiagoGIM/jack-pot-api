@@ -54,7 +54,7 @@ export class BetService {
   }
 
   async editBet(userId: UUID, bet: betCreateDto) {
-    const betFinded = this.prisma.bet.findFirst({ where: { id: bet.id } })
+    const betFinded = await this.prisma.bet.findFirst({ where: { id: bet.id } })
 
     if (!betFinded) throw new NotFoundException('Bet not found')
     return this.prisma.bet.update({

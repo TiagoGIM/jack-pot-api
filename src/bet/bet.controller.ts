@@ -12,7 +12,7 @@ export class BetController {
     @UseGuards(JwtAuthGuard)
     async getUserBets(@Req() req) {
         const userId = req.user.id;
-        return this.betService.userBets(userId);
+        return await this.betService.userBets(userId);
     }
 
 
@@ -20,12 +20,12 @@ export class BetController {
     @UseGuards(JwtAuthGuard)
     async createBet(@Req() req, @Body() bet: betCreateDto) {
         const userId = req.user.id;
-        return this.betService.editBet(userId, bet)
+        return await this.betService.editBet(userId, bet)
     }
 
     @Get('/odd')
     @UseGuards(JwtAuthGuard)
     async oods(){
-        return this.betService.mostPickedByUsers();
+        return await this.betService.mostPickedByUsers();
     }
 }
